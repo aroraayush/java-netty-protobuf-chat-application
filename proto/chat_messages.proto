@@ -1,0 +1,33 @@
+syntax = "proto3";
+option java_package = "edu.usfca.cs.chat";
+
+/* Regular chat message with username + message */
+message ChatMessage {
+    string username = 1; // source username
+    string messageBody = 2;
+}
+
+/* Direct message to a specific host */
+message PrivateMessage {
+    string destinationHost = 1;
+    int32 destinationPort = 2;
+    ChatMessage messageContents = 3;
+}
+
+/* Broadcast control messages to everyone from the system */
+message AdminMessage {
+    string messageBody = 1;
+}
+
+message Registration {
+    string username = 1;
+}
+
+message ChatMessagesWrapper {
+    oneof msg {
+        ChatMessage chatMessage = 1;
+        PrivateMessage privateMessage = 2;
+        AdminMessage adminMessage = 3;
+        Registration registration = 4;
+    }
+}
